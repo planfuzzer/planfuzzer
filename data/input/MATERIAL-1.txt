@@ -1,0 +1,1 @@
+MATERIAL {operator = SEQSCAN {targetlist = [TargetEntry {targetexpr = VAR {varTable = "tb_b", varColumn = "id"}, targetresname = "b_id", resjunk = False},TargetEntry {targetexpr = VAR {varTable = "tb_b", varColumn = "data"}, targetresname = "b_data", resjunk = False}], qual = [], scanrelation = "tb_b"}}

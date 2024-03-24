@@ -1,0 +1,1 @@
+SORT {targetlist = [TargetEntry {targetexpr = VAR {varTable = "tb_b", varColumn = "id"}, targetresname = "b_id", resjunk = False}], operator = SEQSCAN {targetlist = [], qual = [], scanrelation = "tb_b"}, sortCols = [SortEx {sortTarget = 1, sortASC = True, sortNullsFirst = False}]}

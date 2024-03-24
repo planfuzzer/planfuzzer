@@ -1,0 +1,1 @@
+GROUP {targetlist = [TargetEntry {targetexpr = VAR {varTable = "OUTER_VAR", varColumn = "id"}, targetresname = "id", resjunk = False}], qual = [], operator = SEQSCAN {targetlist = [TargetEntry {targetexpr = VAR {varTable = "tb_b", varColumn = "id"}, targetresname = "id", resjunk = False}], qual = [], scanrelation = "tb_b"}, groupCols = [1]}

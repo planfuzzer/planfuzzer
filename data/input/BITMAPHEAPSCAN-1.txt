@@ -1,0 +1,1 @@
+BITMAPHEAPSCAN {targetlist = [TargetEntry {targetexpr = VAR {varTable = "tb_a", varColumn = "id"}, targetresname = "id", resjunk = False}], bitmapqualorig = [], operator = BITMAPINDEXSCAN {indexqual = [], indexname = "index_id", scanrelation = "tb_a"}, scanrelation = "tb_a"}

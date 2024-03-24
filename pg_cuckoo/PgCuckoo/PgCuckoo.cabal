@@ -1,0 +1,102 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.35.1.
+--
+-- see: https://github.com/sol/hpack
+
+name:           PgCuckoo
+version:        0.1.0.0
+synopsis:       PgCuckoo Plan Decorator for PostgreSQL Plan Forcing
+description:    Please see the README
+category:       Database
+stability:      Experimental
+homepage:       https://github.com/kryonix/pg_cuckoo#readme
+bug-reports:    https://github.com/kryonix/pg_cuckoo/issues
+author:         Denis Hirn
+maintainer:     Denis Hirn <denis.hirn@uni-tuebingen.de>
+copyright:      2018-2019 Denis Hirn
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+
+source-repository head
+  type: git
+  location: https://github.com/kryonix/pg_cuckoo
+  subdir: PgCuckoo
+
+library
+  exposed-modules:
+      Database.PgCuckoo.Extract
+      Database.PgCuckoo.GetTable
+      Database.PgCuckoo.GPrint
+      Database.PgCuckoo.InAST
+      Database.PgCuckoo.Inference
+      Database.PgCuckoo.Lib
+      Database.PgCuckoo.OperSem
+      Database.PgCuckoo.PgPlan
+      Database.PgCuckoo.Reader
+      Database.PgCuckoo.TrChunks
+      Database.PgCuckoo.Validate
+  other-modules:
+      Paths_PgCuckoo
+  hs-source-dirs:
+      src
+  build-depends:
+      HDBC
+    , HDBC-postgresql ==2.3.2.6
+    , MissingH
+    , ansi-wl-pprint
+    , base >=4.7 && <5
+    , containers
+    , convertible
+    , deepseq
+    , megaparsec
+    , mtl
+    , pretty-show
+  default-language: Haskell2010
+
+executable cuckoo-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_PgCuckoo
+  hs-source-dirs:
+      app
+  ghc-options: -rtsopts -with-rtsopts=-N
+  build-depends:
+      ConfigFile
+    , HDBC
+    , HDBC-postgresql ==2.3.2.6
+    , MissingH
+    , PgCuckoo
+    , ansi-wl-pprint
+    , base >=4.7 && <5
+    , containers
+    , convertible
+    , deepseq
+    , megaparsec
+    , mtl
+    , pretty-show
+  default-language: Haskell2010
+
+test-suite cuckoo-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_PgCuckoo
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      HDBC
+    , HDBC-postgresql ==2.3.2.6
+    , MissingH
+    , PgCuckoo
+    , ansi-wl-pprint
+    , base >=4.7 && <5
+    , containers
+    , convertible
+    , deepseq
+    , megaparsec
+    , mtl
+    , pretty-show
+  default-language: Haskell2010

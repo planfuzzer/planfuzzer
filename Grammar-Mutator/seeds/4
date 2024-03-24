@@ -1,0 +1,1 @@
+RESULT{targetlist=[TargetEntry{targetexpr=VARPOS{varTable=tb_d,varPos=4},targetresname="zHG",resjunk=True},TargetEntry{targetexpr=VARPOS{varTable=tb_d,varPos=856},targetresname="QdSl",resjunk=False},TargetEntry{targetexpr=SCANVAR {colPos=2},targetresname="XM",resjunk=False}],resconstantqual=CONST{constvalue ="9",consttype ="int4"}}

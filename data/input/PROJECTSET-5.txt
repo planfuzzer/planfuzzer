@@ -1,0 +1,1 @@
+PROJECTSET {targetlist = [], operator = RESULT {targetlist = [], resconstantqual = Nothing}}

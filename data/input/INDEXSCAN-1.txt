@@ -1,0 +1,1 @@
+INDEXSCAN {targetlist = [TargetEntry {targetexpr = VAR {varTable = "tb_a", varColumn = "id"}, targetresname = "id", resjunk = True}], qual = [], indexqual = [], indexorderby = [], indexorderasc = True, indexname = "index_id", scanrelation = "tb_a"}

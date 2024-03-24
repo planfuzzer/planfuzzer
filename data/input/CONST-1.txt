@@ -1,0 +1,1 @@
+RESULT {targetlist = [TargetEntry {targetexpr = CONST {constvalue = "42", consttype = "int4"}, targetresname = "valid", resjunk = False}], resconstantqual = Nothing}

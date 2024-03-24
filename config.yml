@@ -1,0 +1,16 @@
+db: postgresql
+passwd: '123456'
+user_name: postgres
+db_name: fuzz
+host: 127.0.0.1
+port: 7000
+
+sqlsmith: ./sqlsmith
+tmp_query: ./.dump-query
+tmp_err: ./.err
+output: querypool
+
+capacity: 10000
+
+startup_cmd: "/usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data -p 7000 &"
+# log_dir: "/home/planfuzzer/lab/"

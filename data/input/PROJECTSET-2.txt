@@ -1,0 +1,1 @@
+PROJECTSET {targetlist = [TargetEntry {targetexpr = FUNCEXPR {funcname = "generate_series", funcargs = [CONST {constvalue = "1", consttype = "int4"},CONST {constvalue = "10", consttype = "int4"}]}, targetresname = "value", resjunk = False}], operator = RESULT {targetlist = [], resconstantqual = Nothing}}

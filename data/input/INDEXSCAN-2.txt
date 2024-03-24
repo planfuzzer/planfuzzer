@@ -1,0 +1,1 @@
+INDEXSCAN {targetlist = [], qual = [], indexqual = [], indexorderby = [], indexorderasc = True, indexname = "index_id", scanrelation = "tb_a"}

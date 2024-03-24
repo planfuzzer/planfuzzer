@@ -1,0 +1,1 @@
+SUBQUERYSCAN {targetlist = [TargetEntry {targetexpr = SCANVAR {colPos = 1}, targetresname = "foo", resjunk = False}], qual = [], subplan = SEQSCAN {targetlist = [TargetEntry {targetexpr = VAR {varTable = "tb_b", varColumn = "id"}, targetresname = "b_id", resjunk = False}], qual = [], scanrelation = "tb_b"}}

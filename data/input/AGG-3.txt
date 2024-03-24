@@ -1,0 +1,1 @@
+AGG {targetlist = [], qual = [], operator = RESULT {targetlist = [], resconstantqual = Nothing}, groupCols = [], aggstrategy = AGG_PLAIN, aggsplit = [AGGSPLITOP_SIMPLE]}

@@ -1,0 +1,1 @@
+MERGEJOIN {targetlist = [], qual = [], joinType = INNER, inner_unique = True, joinquals = [], mergeclauses = [], mergeStrategies = [], lefttree = SEQSCAN {targetlist = [], qual = [], scanrelation = "tb_b"}, righttree = SEQSCAN {targetlist = [], qual = [], scanrelation = "tb_c"}}

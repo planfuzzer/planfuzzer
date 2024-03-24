@@ -1,0 +1,1 @@
+GATHER {targetlist = [], num_workers = 2, operator = PARALLEL {operator = SEQSCAN {targetlist = [TargetEntry {targetexpr = VAR {varTable = "tb_a", varColumn = "id"}, targetresname = "id", resjunk = False}], qual = [], scanrelation = "tb_a"}}, rescan_param = 0}

@@ -1,0 +1,1 @@
+RESULT {targetlist = [TargetEntry {targetexpr = AND {args = []}, targetresname = "foo", resjunk = False}], resconstantqual = Nothing}

@@ -1,0 +1,1 @@
+BITMAPHEAPSCAN {targetlist = [], bitmapqualorig = [], operator = BITMAPINDEXSCAN {indexqual = [], indexname = "index_id", scanrelation = "tb_a"}, scanrelation = "tb_a"}

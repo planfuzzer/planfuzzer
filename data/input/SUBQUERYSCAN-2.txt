@@ -1,0 +1,1 @@
+SUBQUERYSCAN {targetlist = [], qual = [], subplan = SEQSCAN {targetlist = [], qual = [], scanrelation = "tb_b"}}

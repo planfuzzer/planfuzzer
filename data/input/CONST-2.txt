@@ -1,0 +1,1 @@
+RESULT {targetlist = [TargetEntry {targetexpr = AND {args = [CONST {constvalue = "true", consttype = "bool"},CONST {constvalue = "false", consttype = "bool"}]}, targetresname = "foo", resjunk = False}], resconstantqual = Nothing}

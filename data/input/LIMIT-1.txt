@@ -1,0 +1,1 @@
+LIMIT {operator = SEQSCAN {targetlist = [TargetEntry {targetexpr = VAR {varTable = "tb_b", varColumn = "id"}, targetresname = "b_id", resjunk = False}], qual = [], scanrelation = "tb_b"}, limitOffset = Nothing, limitCount = Just (CONST {constvalue = "6", consttype = "int8"})}

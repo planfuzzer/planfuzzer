@@ -1,0 +1,1 @@
+WINDOWAGG {targetlist = [], operator = SEQSCAN {targetlist = [], qual = [], scanrelation = "tb_b"}, winrefId = 1, ordEx = [], groupCols = [], frameOptions = [FRAMEOPTION_RANGE], startOffset = Nothing, endOffset = Nothing}

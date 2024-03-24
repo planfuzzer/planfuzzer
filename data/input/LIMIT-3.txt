@@ -1,0 +1,1 @@
+LIMIT {operator = SEQSCAN {targetlist = [], qual = [], scanrelation = "tb_b"}, limitOffset = Nothing, limitCount = Just (CONST {constvalue = "6", consttype = "int8"})}

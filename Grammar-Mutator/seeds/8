@@ -1,0 +1,1 @@
+BITMAPAND{bitmapplans = [BITMAPINDEXSCAN{indexqual = [OPEXPR{oprname = "/",oprargs = [SCANVAR {colPos=0},SCANVAR {colPos=4}],oprargs = [SCANVAR {colPos=84},SCANVAR {colPos=72}]}],indexname = index_id,scanrelation = tb_a},BITMAPINDEXSCAN{indexqual = [],indexname = index_nume,scanrelation = tb_d}]}

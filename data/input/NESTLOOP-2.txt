@@ -1,0 +1,1 @@
+NESTLOOP {targetlist = [], joinType = INNER, inner_unique = False, joinquals = [], nestParams = [], lefttree = SEQSCAN {targetlist = [], qual = [], scanrelation = "tb_b"}, righttree = SEQSCAN {targetlist = [], qual = [], scanrelation = "tb_b"}}

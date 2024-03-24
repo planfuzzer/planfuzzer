@@ -1,0 +1,1 @@
+FUNCTIONSCAN {targetlist = [TargetEntry {targetexpr = SCANVAR {colPos = 1}, targetresname = "value", resjunk = False}], qual = [], functions = [FUNCEXPR {funcname = "generate_series", funcargs = [CONST {constvalue = "1", consttype = "int4"},CONST {constvalue = "10", consttype = "int4"}]}], funcordinality = False}

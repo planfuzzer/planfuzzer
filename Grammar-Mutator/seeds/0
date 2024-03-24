@@ -1,0 +1,1 @@
+VALUESSCAN{targetlist=[TargetEntry{targetexpr=SCANVAR {colPos=9},targetresname="0",resjunk=False},TargetEntry{targetexpr=SCANVAR {colPos=947},targetresname="pb",resjunk=True}],qual=[],values_list = [[CONST{constvalue ="7",consttype ="int4"}]]}

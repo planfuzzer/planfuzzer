@@ -1,0 +1,1 @@
+UNIQUE {operator = SEQSCAN {targetlist = [TargetEntry {targetexpr = VAR {varTable = "tb_b", varColumn = "id"}, targetresname = "id", resjunk = False}], qual = [], scanrelation = "tb_b"}, uniqueCols = [1]}

@@ -1,0 +1,1 @@
+SEQSCAN {targetlist = [TargetEntry {targetexpr = VAR {varTable = "tb_b", varColumn = "id"}, targetresname = "foo", resjunk = False}], qual = [FUNCEXPR {funcname = "int4lt", funcargs = [VAR {varTable = "tb_b", varColumn = "id"},CONST {constvalue = "2", consttype = "int4"}]}], scanrelation = "tb_b"}

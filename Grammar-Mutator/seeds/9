@@ -1,0 +1,1 @@
+LIMIT{BITMAPINDEXSCAN{indexqual = [],indexname = index_idd,,scanrelation = tb_c},limitOffset=Nothing,limitCount=JUST(CONST{constvalue ="979",consttype ="int4"})}

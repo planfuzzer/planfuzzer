@@ -1,0 +1,1 @@
+SEQSCAN {targetlist = [], qual = [], scanrelation = "tb_b"}

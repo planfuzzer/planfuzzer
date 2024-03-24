@@ -1,0 +1,1 @@
+BITMAPHEAPSCAN{targetlist=[TargetEntry{targetexpr=SCANVAR {colPos=8894},targetresname="7c",resjunk=False}],bitmapqualorig = [OPEXPR{oprname = ">",oprargs = [SCANVAR {colPos=2},SCANVAR {colPos=2}],oprargs = [SCANVAR {colPos=4},SCANVAR {colPos=1}]}],operator = BITMAPINDEXSCAN{indexqual = [],indexname = index_ide,scanrelation = tb_a},scanrelation = index_datae}
