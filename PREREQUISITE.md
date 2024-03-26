@@ -11,7 +11,7 @@ wget -qO- https://get.haskellstack.org/ | sh
 cd AFLplusplus
 make all -j && sudo make install
 ```
-### 3) Build lib for Pgcuckoo
+### 3) Build Lib for Pgcuckoo
 ``` shell
 # Haskell lib, will build in pg_cuckoo/PgCuckoo/.stack-work/.../build/
 cd pg_cuckoo/PgCuckoo 
