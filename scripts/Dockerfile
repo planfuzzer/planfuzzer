@@ -46,17 +46,17 @@ WORKDIR /home/planfuzzer/pg_cuckoo/PgExtension/src
 RUN make && make install
 
 WORKDIR /home/planfuzzer/postgresql-10.23/install
-RUN AFL_IGNORE_PROBLEMS=1 bin/initdb -D data && bin/pg_ctl start -D data && \
-    bin/createdb fuzz && bin/psql -d fuzz -c "CREATE EXTENSION cuckoo;"
-RUN AFL_DEBUG=1 bin/postgres 2>&1 | grep "__afl_map_size" | tail -n 1 | cut -d"," -f8 | cut -d" " -f 3 > /tmp/mapsize
-RUN python3 initDB.py
+RUN AFL_IGNORE_PROBLEMS=1 initdb -D data && pg_ctl start -D data && \
+    createdb fuzz && psql -d fuzz -c "CREATE EXTENSION cuckoo;"
+RUN AFL_DEBUG=1 postgres 2>&1 | grep "__afl_map_size" | tail -n 1 | cut -d"," -f8 | cut -d" " -f 3 > /tmp/mapsize
+RUN pg_restore -d fuzz /home/planfuzzer/data/fuzz.dump
 
 # Build Grammar
 WORKDIR /home/planfuzzer/Grammar-Mutator
 RUN make GRAMMAR_FILE=../src/grammar/postgresql.json
 
 # Build planfuzzer
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/plan-fuzzer/pg_cuckoo/PgCuckoo/.stack-work/dist/x86_64-linux/Cabal-2.0.1.0/build/:/home/.stack/programs/x86_64-linux/ghc-8.2.2/lib/ghc-8.2.2/rts/:/home/plan-fuzzer/src/cuckoo/
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/planfuzzer/pg_cuckoo/PgCuckoo/.stack-work/dist/x86_64-linux/Cabal-2.0.1.0/build/:/home/.stack/programs/x86_64-linux/ghc-8.2.2/lib/ghc-8.2.2/rts/:/home/planfuzzer/src/cuckoo/
 WORKDIR /home/planfuzzer
 RUN mkdir build && cd build && \
     cmake .. -DPOSTGRESQL && make -j

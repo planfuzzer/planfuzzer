@@ -19,7 +19,7 @@ _____
 
 ## Plan Seed Construction
 ``` shell
-cd src
+cd planfuzzer/src
 python3 preprocess.py
 ```
 ____
@@ -35,19 +35,18 @@ make -j && make install
 ``` shell
 # Build Extension
 export PATH=~/postgresql-10.23/install/bin:$PATH
-cd pg_cuckoo/PgExtension/src
+cd planfuzzer/pg_cuckoo/PgExtension/src
 make && make install
 # Init database
-cd postgresql-10.23/install 
-AFL_IGNORE_PROBLEMS=1 bin/initdb -D data
+AFL_IGNORE_PROBLEMS=1 initdb -D data
 pg_ctl start -D data
-AFL_DEBUG=1 bin/postgres 2>&1 | grep "__afl_map_size" | tail -n 1 | cut -d"," -f8 | cut -d" " -f 3 > /tmp/mapsize
-bin/createdb fuzz && bin/psql -d fuzz -c "CREATE EXTENSION cuckoo;"
-python3 initDB.py
+AFL_DEBUG=1 postgres 2>&1 | grep "__afl_map_size" | tail -n 1 | cut -d"," -f8 | cut -d" " -f 3 > /tmp/mapsize
+createdb fuzz && psql -d fuzz -c "CREATE EXTENSION cuckoo;"
+pg_restore -d fuzz planfuzzer/data/fuzz.dump
 ```
 ### 3) Build Grammar
 ``` shell
-cd Grammar-Mutator
+cd planfuzzer/Grammar-Mutator
 make GRAMMAR_FILE=../src/grammar/postgresql.json
 ```
 ### 4) Fuzzing!
@@ -71,24 +70,25 @@ export PATH=~/postgres-10.23/install/bin:$PATH
 git clone https://github.com/timescale/timescaledb
 cd timescaledb && git checkout 1.7.0
 ./bootstrap -DREGRESS_CHECKS=OFF
-make install
+cd build && make install
 ```
 ### 2) DBMS Init
 ``` shell
 # Build Extension
 export PATH=~/postgres-10.23/install/bin:$PATH
-cd pg_cuckoo/PgExtension/src
+cd planfuzzer/pg_cuckoo/PgExtension/src
 make && make install
 # Init database
 cd postgresql-10.23/install 
-AFL_IGNORE_PROBLEMS=1 bin/initdb -D data
+AFL_IGNORE_PROBLEMS=1 initdb -D data
 pg_ctl start -D data
-bin/createdb fuzz && bin/psql -d fuzz -c "CREATE EXTENSION cuckoo; CREATE EXTENSION timescaledb;"
-python3 initDB.py
+AFL_DEBUG=1 postgres 2>&1 | grep "__afl_map_size" | tail -n 1 | cut -d"," -f8 | cut -d" " -f 3 > /tmp/mapsize
+createdb fuzz && psql -d fuzz -c "CREATE EXTENSION cuckoo; CREATE EXTENSION timescaledb;"
+pg_restore -d fuzz planfuzzer/data/fuzz.dump
 ```
 ### 3) Build Grammar
 ``` shell
-cd Grammar-Mutator
+cd planfuzzer/Grammar-Mutator
 make GRAMMAR_FILE=../src/grammar/timescaledb.json
 ```
 ### 4) Fuzzing!
@@ -119,18 +119,19 @@ make && make install
 ``` shell
 # Build Extension
 export PATH=~/postgresql-10.23/install/bin:$PATH
-cd pg_cuckoo/PgExtension/src
+cd planfuzzer/pg_cuckoo/PgExtension/src
 make && make install
 # Init database
 cd postgresql-10.23/install 
-AFL_IGNORE_PROBLEMS=1 bin/initdb -D data
+AFL_IGNORE_PROBLEMS=1 initdb -D data
 pg_ctl start -D data
-bin/createdb fuzz && bin/psql -d fuzz -c "CREATE EXTENSION cuckoo; CREATE EXTENSION postgis;"
-python3 initDB.py
+AFL_DEBUG=1 postgres 2>&1 | grep "__afl_map_size" | tail -n 1 | cut -d"," -f8 | cut -d" " -f 3 > /tmp/mapsize
+createdb fuzz && psql -d fuzz -c "CREATE EXTENSION cuckoo; CREATE EXTENSION postgis;"
+pg_restore -d fuzz planfuzzer/data/fuzz.dump
 ```
 ### 3) Build Grammar
 ``` shell
-cd Grammar-Mutator
+cd planfuzzer/Grammar-Mutator
 make GRAMMAR_FILE=../src/grammar/postgis.json
 ```
 ### 4) Fuzzing!
@@ -156,18 +157,18 @@ make -j && make install
 ``` shell
 # Build Extension
 export PATH=~/agensgraph/install/bin:$PATH
-cd pg_cuckoo/PgExtension/src
+cd planfuzzer/pg_cuckoo/PgExtension/src
 make && make install
 # Init database
-cd agensgraph/install 
-AFL_IGNORE_PROBLEMS=1 bin/initdb -D data
+AFL_IGNORE_PROBLEMS=1 initdb -D data
 pg_ctl start -D data
-bin/createdb fuzz && bin/psql -d fuzz -c "CREATE EXTENSION cuckoo;"
-python3 initDB.py
+AFL_DEBUG=1 postgres 2>&1 | grep "__afl_map_size" | tail -n 1 | cut -d"," -f8 | cut -d" " -f 3 > /tmp/mapsize
+createdb fuzz && psql -d fuzz -c "CREATE EXTENSION cuckoo;"
+pg_restore -d fuzz planfuzzer/data/fuzz.dump
 ```
 ### 3) Build Grammar
 ``` shell
-cd Grammar-Mutator
+cd planfuzzer/Grammar-Mutator
 make GRAMMAR_FILE=../src/grammar/agensgraph.json
 ```
 ### 4) Fuzzing!

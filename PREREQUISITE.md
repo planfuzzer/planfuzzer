@@ -21,4 +21,4 @@ stack build
 # C++ lib, will build in src/cuckoo/
 make
 ````
-* NOTE: you may need to modify `LIBPATH*` in `pg_cuckoo/PgCuckoo/Makefile`
+* NOTE: you may need to modify `LIBPATH*` and `LIBS` in `pg_cuckoo/PgCuckoo/Makefile`
