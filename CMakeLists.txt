@@ -11,7 +11,18 @@ find_package(PkgConfig)
 find_package(PostgreSQL REQUIRED)
 find_package(yaml-cpp REQUIRED)
 
-# add_subdirectory(third_party/abseil-cpp)
+option(ALL "Build all DBMSs" ON)
+option(POSTGRESQL "Build postgres" OFF)
+option(AGENSGRAPH "Build agensgraph" OFF)
+
+if (POSTGRESQL OR AGENSGRAPH) 
+    set(ALL OFF)
+endif()
+
+if (ALL)
+    set(POSTGRESQL ON)
+    set(AGENSGRAPH ON)
+endif()
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/AFLplusplus/include
@@ -34,7 +45,6 @@ target_link_libraries(postgresql_client PUBLIC
 )
 target_compile_options(postgresql_client PRIVATE -fPIC)
 list(APPEND LINK_CLIENT postgresql_client)
-
 
 # all client
 add_library(all_client SHARED 

@@ -11,7 +11,7 @@
 | passwd               | DBMS password                 |
 | port                 | DBMS connection port          |
 | sqlsmith             | sqlsmith executable file path |
-|  output              | saved query plan              |
+| output               | saved query plan              |
 | capacity             | query plan pool capacity      |
 | startup_cmd          | DBMS startup command          |
 
@@ -41,6 +41,7 @@ make && make install
 cd postgresql-10.23/install 
 AFL_IGNORE_PROBLEMS=1 bin/initdb -D data
 pg_ctl start -D data
+AFL_DEBUG=1 bin/postgres 2>&1 | grep "__afl_map_size" | tail -n 1 | cut -d"," -f8 | cut -d" " -f 3 > /tmp/mapsize
 bin/createdb fuzz && bin/psql -d fuzz -c "CREATE EXTENSION cuckoo;"
 python3 initDB.py
 ```
@@ -52,54 +53,11 @@ make GRAMMAR_FILE=../src/grammar/postgresql.json
 ### 4) Fuzzing!
 ``` shell
 mkdir build && cd build
-cmake .. && make -j
+cmake .. -DPOSTGRESQL && make -j
 sh srcipts/fuzz.sh
 ```
 * NOTE: you may need to modify `fuzz.sh`
 ___________
-
-## TimescaleDB
-### 1) DBMS Install
-``` shell
-export CC=afl-clang-fast
-export CXX=afl-clang-fast++
-wget https://ftp.postgresql.org/pub/source/v10.23/postgresql-10.23.tar.gz
-cd postgresql-10.23
-./configure --prefix=$PWD/install
-make -j && make install
-export PATH=~/postgresql-10.23/install/bin:$PATH
-git clone https://github.com/timescale/timescaledb
-cd timescaledb && git checkout 1.7.0
-./bootstrap -DREGRESS_CHECKS=OFF
-make install
-```
-### 2) DBMS Init
-``` shell
-# Build Extension
-export PATH=~/postgresql-10.23/install/bin:$PATH
-cd pg_cuckoo/PgExtension/src
-make && make install
-# Init database
-cd postgresql-10.23/install 
-AFL_IGNORE_PROBLEMS=1 bin/initdb -D data
-pg_ctl start -D data
-bin/createdb fuzz && bin/psql -d fuzz -c "CREATE EXTENSION cuckoo;"
-python3 initDB.py
-```
-### 3) Build Grammar
-``` shell
-cd Grammar-Mutator
-make GRAMMAR_FILE=../src/grammar/timescaledb.json
-```
-### 4) Fuzzing!
-``` shell
-mkdir build && cd build
-cmake .. && make -j
-sh srcipts/fuzz.sh
-```
-* NOTE: you may need to modify `fuzz.sh`
-__________
-
 ## TimescaleDB
 ### 1) DBMS Install
 ``` shell
@@ -136,7 +94,7 @@ make GRAMMAR_FILE=../src/grammar/timescaledb.json
 ### 4) Fuzzing!
 ``` shell
 mkdir build && cd build
-cmake .. && make -j
+cmake .. -DPOSTGRESQL && make -j
 sh srcipts/fuzz.sh
 ```
 * NOTE: you may need to modify `fuzz.sh`
@@ -178,7 +136,7 @@ make GRAMMAR_FILE=../src/grammar/postgis.json
 ### 4) Fuzzing!
 ``` shell
 mkdir build && cd build
-cmake .. && make -j
+cmake .. -DPOSTGRESQL && make -j
 sh srcipts/fuzz.sh
 ```
 * NOTE: you may need to modify `fuzz.sh`
@@ -215,7 +173,7 @@ make GRAMMAR_FILE=../src/grammar/agensgraph.json
 ### 4) Fuzzing!
 ``` shell
 mkdir build && cd build
-cmake .. && make -j
+cmake .. -DAGENSGRAPH && make -j
 sh srcipts/fuzz.sh
 ```
 * NOTE: you may need to modify `fuzz.sh`

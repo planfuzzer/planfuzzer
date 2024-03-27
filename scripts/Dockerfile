@@ -1,10 +1,11 @@
 from ubuntu:18.04
-LABEL maintainer="planFuzzer"
+LABEL maintainer="planfuzzer"
 
 RUN apt-get update
-RUN sudo apt-get -y install make cmake build-essential vim git \
-    clang ninja-build pkg-config clang-format libpq-dev llvm libyaml-cpp-dev \
-     zlib1g-dev libreadline8 libreadline-dev python3-fire
+RUN sudo apt install gcc clang clang-format make cmake build-essential \
+        autoconf autoconf-archive ninja-build clang pkg-config clang-format \
+        libpq-dev libyaml-cpp-dev zlib1g-dev libreadline8 libreadline-dev \
+        llvm python3-fire
     
 RUN wget -qO- https://get.haskellstack.org/ | sh
 
@@ -18,44 +19,48 @@ RUN chmod +w /etc/sudoers && \
     echo "%postgres   ALL=(ALL:ALL)NOPASSWD:ALL" >> /etc/sudoers && \
     chmod -w /etc/sudoers
 
-USER postgres
-WORKDIR /home
+COPY ./planfuzzer /home/planfuzzer
 
-RUN wget https://ftp.postgresql.org/pub/source/v10.23/postgresql-10.23.tar.gz && tar -xf postgresql-10.23.tar.gz
+USER postgres
+
+ENV PATH=/usr/lib/llvm-10/bin:/home/.local/bin/:$PATH
+
+# Build lib for Pgcuckoo
+WORKDIR /home/planfuzzer/pg_cuckoo/PgCuckoo
+RUN stack build && make
 
 RUN git clone https://github.com/planfuzzer/planfuzzer.git && \
-    cd AFLplusplus/ && LLVM_CONFIG=llvm-config-14 make -j
+    cd AFLplusplus/ && make -j && make install
 
 # Build PostgreSQL
+WORKDIR /home
+RUN wget https://ftp.postgresql.org/pub/source/v10.23/postgresql-10.23.tar.gz && \
+     tar -xf postgresql-10.23.tar.gz
 WORKDIR /home/postgresql-10.23/
-RUN mkdir build/ && cd build/ && \
-    CC=/home/planfuzzer/AFLplusplus/afl-cc CXX=/home/planfuzzer/AFLplusplus/afl-c++  ../configure && \
-    make -j && sudo make install  
+RUN CC=afl-clang-fast CXX=afl-clang-fast++ ./configure --prefix=$PWD/install && \
+     make install -j
 
-RUN sudo mkdir /usr/local/pgsql/data && sudo chown postgres /usr/local/pgsql/data &&  \
-    AFL_IGNORE_PROBLEMS=1 /usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data
+# DBMD Init
+ENV PATH=/home/postgresql-10.23/install/bin:$PATH
+WORKDIR /home/planfuzzer/pg_cuckoo/PgExtension/src 
+RUN make && make install
 
-# Build lib for Pgcuckoo(Haskell)
-WORKDIR /home/planfuzzer/pg_cuckoo/PgCuckoo
-RUN stack instal ghcid && stack build 
-RUN make -j
+WORKDIR /home/planfuzzer/postgresql-10.23/install
+RUN AFL_IGNORE_PROBLEMS=1 bin/initdb -D data && bin/pg_ctl start -D data && \
+    bin/createdb fuzz && bin/psql -d fuzz -c "CREATE EXTENSION cuckoo;"
+RUN AFL_DEBUG=1 bin/postgres 2>&1 | grep "__afl_map_size" | tail -n 1 | cut -d"," -f8 | cut -d" " -f 3 > /tmp/mapsize
+RUN python3 initDB.py
 
-# Build extensions for postgresql
-WORKDIR /home/planfuzzer/pg_cuckoo/PgExtension/src
-RUN make && \
-    sudo install -c -m 755 cuckoo.so '/usr/local/pgsql/lib/cuckoo.so' && \
-    sudo install -c -m 644 .//cuckoo.control '/usr/local/pgsql/share/extension/' &&\
-    sudo install -c -m 644 .//cuckoo--1.0.sql '/usr/local/pgsql/share/extension'
-
-# Build lib for mutator
+# Build Grammar
 WORKDIR /home/planfuzzer/Grammar-Mutator
-RUN make GRAMMAR_FILE=../src/grammar/plan.json
+RUN make GRAMMAR_FILE=../src/grammar/postgresql.json
 
-# Build driver for PostgreSQL
+# Build planfuzzer
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/plan-fuzzer/pg_cuckoo/PgCuckoo/.stack-work/dist/x86_64-linux/Cabal-2.0.1.0/build/:/home/.stack/programs/x86_64-linux/ghc-8.2.2/lib/ghc-8.2.2/rts/:/home/plan-fuzzer/src/cuckoo/
 WORKDIR /home/planfuzzer
-RUN mkdir build %% cd build && \
-    cmake .. && make -j
+RUN mkdir build && cd build && \
+    cmake .. -DPOSTGRESQL && make -j
     
-# RUN    
-RUN AFL_DEBUG=1 /usr/local/pgsql/bin/postgres 2>&1 | grep "__afl_map_size" | tail -n 1 | cut -d"," -f8 | cut -d" " -f 3 > /tmp/mapsize
-RUN cd scripts && sh fuzz.sh
+# RUN   
+WORKDIR /home/planfuzzer/scripts 
+RUN sh fuzz.sh
