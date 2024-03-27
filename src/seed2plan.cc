@@ -28,7 +28,6 @@ int main (int argc, char** argv){
         return 1;
     }
 
-    // 检查目录是否存在
     if (!fs::is_directory (dir)){
         std::cout << "dir not exist !" << std::endl;
         return 1;
@@ -36,29 +35,28 @@ int main (int argc, char** argv){
 
     for (auto& file : fs::directory_iterator{argv[1]}){
         if (!fs::is_directory (file.path())){ 
-            std::ifstream fs { file.path () }; //打开文件
+            std::ifstream fs { file.path () }; 
 
             if (fs.is_open()){
-                getline (fs, line); //读取文件的一行
+                getline (fs, line); 
                 
                 sql = operator2PlannedStmt(line, cuckoo_conn);
-                // 填充计划失败，continue
                 if(sql == NULL){
                     std::cout << file.path().filename() << " translate to plannedstmt error!" << std::endl;
                     continue;
                 }
 
-                fs::path file_saved = dir / file.path().filename() ; //构造文件名
-                std::ofstream ofs { file_saved }; //打开文件
+                fs::path file_saved = dir / file.path().filename() ; 
+                std::ofstream ofs { file_saved }; 
                 if (ofs){
-                    ofs << std::string(sql) << std::endl; //写入字符串
-                    ofs.close (); //关闭文件
+                    ofs << std::string(sql) << std::endl; 
+                    ofs.close (); 
                     // std::cout << "File " << file_saved << " written successfully." << std::endl;
                 }else
                     std::cout << "Unable to open plannedstmt file: " << file_saved << std::endl;
                 }
 
-                fs.close (); //关闭文件
+                fs.close (); 
         }
     }
 }

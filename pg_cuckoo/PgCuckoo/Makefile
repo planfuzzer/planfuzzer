@@ -4,7 +4,7 @@ LDFLAGS = -dynamic -shared -fPIC
 GCC = g++
 CXXFLAGS = -shared -fPIC -O3
 # LIBS = -lstdc++ -latomic -lHSrts-ghc8.2.2 -lHSPgCuckoo-0.1.0.0-9z3z4baR2vL8qx7FErfjhJ-ghc8.2.2
-LIBS = -lstdc++ -latomic -lHSrts-ghc8.2.2 -lHSPgCuckoo-0.1.0.0-IxcU4xKSfURB1yERMS0uc2-ghc8.2.2   # ADD disconnet conn , lib name changed
+LIBS = -lstdc++ -latomic -lHSrts-ghc8.2.2 -lHSPgCuckoo-0.1.0.0-IxcU4xKSfURB1yERMS0uc2-ghc8.2.2  
 
 # docker
 GHC_INCLUDE = /home/.stack/programs/x86_64-linux/ghc-8.2.2/lib/ghc-8.2.2/include

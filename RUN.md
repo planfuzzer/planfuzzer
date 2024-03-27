@@ -55,7 +55,7 @@ mkdir build && cd build
 cmake .. && make -j
 sh srcipts/fuzz.sh
 ```
-
+* NOTE: you may need to modify `fuzz.sh`
 ___________
 
 ## TimescaleDB
@@ -97,6 +97,7 @@ mkdir build && cd build
 cmake .. && make -j
 sh srcipts/fuzz.sh
 ```
+* NOTE: you may need to modify `fuzz.sh`
 __________
 
 ## TimescaleDB
@@ -138,6 +139,7 @@ mkdir build && cd build
 cmake .. && make -j
 sh srcipts/fuzz.sh
 ```
+* NOTE: you may need to modify `fuzz.sh`
 ____________
 ## PostGIS
 ### 1) DBMS Install
@@ -179,6 +181,7 @@ mkdir build && cd build
 cmake .. && make -j
 sh srcipts/fuzz.sh
 ```
+* NOTE: you may need to modify `fuzz.sh`
 _________________
 
 ## AgensGraph
@@ -215,3 +218,4 @@ mkdir build && cd build
 cmake .. && make -j
 sh srcipts/fuzz.sh
 ```
+* NOTE: you may need to modify `fuzz.sh`
