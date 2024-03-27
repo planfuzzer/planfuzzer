@@ -19,7 +19,7 @@ RUN chmod +w /etc/sudoers && \
     echo "%postgres   ALL=(ALL:ALL)NOPASSWD:ALL" >> /etc/sudoers && \
     chmod -w /etc/sudoers
 
-COPY ./planfuzzer /home/planfuzzer
+COPY . /home/planfuzzer
 
 USER postgres
 
