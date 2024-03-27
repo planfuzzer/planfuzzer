@@ -7,10 +7,10 @@ TODO
 ## Build Docker Locally
 - Docker for testing PostgreSQL (may take 1 hour or longer)
 ``` shell
-cd srcipts
-docker build -t planfuzzer .
-docker run -it planfuzzer
+sudo docker build -t planfuzzer -f scripts/Dockerfile .
+sudo docker run -it planfuzzer
 ```
+- NOTE: since `COPY` in `Dockerfile` does not support upper-level directory, `docker build` must in `PlanFuzzer` root directory.
 
 ## Troubleshooting (Build process fails or gets stuck)
 - clean the Docker environment via `sudo docker system prune --all` and rebuild the image
