@@ -2,12 +2,9 @@ from ubuntu:18.04
 LABEL maintainer="planfuzzer"
 
 RUN apt-get update
-RUN sudo apt install gcc clang clang-format make cmake build-essential \
+RUN apt-get install sudo gcc clang clang-format make cmake build-essential \
         autoconf autoconf-archive ninja-build clang pkg-config clang-format \
-        libpq-dev libyaml-cpp-dev zlib1g-dev libreadline8 libreadline-dev \
-        llvm python3-fire
-    
-RUN wget -qO- https://get.haskellstack.org/ | sh
+        libpq-dev libyaml-cpp-dev zlib1g-dev libreadline-dev llvm wget
 
 RUN mkdir -p /home && \
     groupadd postgres && \
@@ -22,6 +19,8 @@ RUN chmod +w /etc/sudoers && \
 COPY . /home/planfuzzer
 
 USER postgres
+
+RUN wget -qO- https://get.haskellstack.org/ | sh
 
 ENV PATH=/usr/lib/llvm-10/bin:/home/.local/bin/:$PATH
 
