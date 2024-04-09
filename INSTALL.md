@@ -1,8 +1,11 @@
 # Get Docker Images
+You can take two ways to prepare the docker images for `PlanFuzzer`: download the pre-built images from Docker Hub, or build the image from source Dockerfile.
 
 ## Download Pre-built Docker Image
-TODO
-
+``` shell
+sudo docker pull planfuzzer/planfuzzer:1.0
+sudo docker tag planfuzzer/planfuzzer:1.0 planfuzzer:latest
+```
 
 ## Build Docker Locally
 - Docker for testing PostgreSQL (may take 1 hour or longer)
@@ -14,4 +17,4 @@ sudo docker run -it planfuzzer
 
 ## Troubleshooting (Build process fails or gets stuck)
 - clean the Docker environment via `sudo docker system prune --all` and rebuild the image
-- Comment out the failed later parts of the `Dockerfile` and try building manually
+- Modify the environment variable in the `Dockerfile` and try to manually build the failed part

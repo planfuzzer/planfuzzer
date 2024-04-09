@@ -12,5 +12,5 @@ output: querypool
 
 capacity: 100
 
-startup_cmd: "/usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data -p 7000 &"
+startup_cmd: "postgres -D /home/postgresql-10.23/install/data -p 7000 &"
 # log_dir: "/home/planfuzzer/lab/"

@@ -52,7 +52,7 @@ make GRAMMAR_FILE=../src/grammar/postgresql.json
 ### 4) Fuzzing!
 ``` shell
 mkdir build && cd build
-cmake .. -DPOSTGRESQL && make -j
+cmake .. && make -j
 sh srcipts/fuzz.sh
 ```
 * NOTE: you may need to modify `fuzz.sh`
@@ -94,7 +94,7 @@ make GRAMMAR_FILE=../src/grammar/timescaledb.json
 ### 4) Fuzzing!
 ``` shell
 mkdir build && cd build
-cmake .. -DPOSTGRESQL && make -j
+cmake .. && make -j
 sh srcipts/fuzz.sh
 ```
 * NOTE: you may need to modify `fuzz.sh`
@@ -137,7 +137,7 @@ make GRAMMAR_FILE=../src/grammar/postgis.json
 ### 4) Fuzzing!
 ``` shell
 mkdir build && cd build
-cmake .. -DPOSTGRESQL && make -j
+cmake .. && make -j
 sh srcipts/fuzz.sh
 ```
 * NOTE: you may need to modify `fuzz.sh`
@@ -174,7 +174,7 @@ make GRAMMAR_FILE=../src/grammar/agensgraph.json
 ### 4) Fuzzing!
 ``` shell
 mkdir build && cd build
-cmake .. -DAGENSGRAPH && make -j
+cmake .. && make -j
 sh srcipts/fuzz.sh
 ```
 * NOTE: you may need to modify `fuzz.sh`

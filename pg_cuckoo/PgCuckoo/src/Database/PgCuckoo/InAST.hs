@@ -104,24 +104,24 @@ data Operator = SEQSCAN
                 
               | INDEXONLYSCAN
               -- 10.23
-                -- { targetlist    :: [TargetEntry]
-                -- , qual          :: [Expr]
-                -- , indexqual     :: [Expr]
-                -- , recheckqual   :: [Expr]
-                -- , indexorderby  :: [SortEx]
-                -- , indexorderasc :: Bool
-                -- , indexname     :: String
-                -- , scanrelation  :: String
-                -- }
-              -- 10.4
                 { targetlist    :: [TargetEntry]
                 , qual          :: [Expr]
                 , indexqual     :: [Expr]
+                , recheckqual   :: [Expr]
                 , indexorderby  :: [SortEx]
                 , indexorderasc :: Bool
                 , indexname     :: String
                 , scanrelation  :: String
                 }
+              -- 10.4
+                -- { targetlist    :: [TargetEntry]
+                -- , qual          :: [Expr]
+                -- , indexqual     :: [Expr]
+                -- , indexorderby  :: [SortEx]
+                -- , indexorderasc :: Bool
+                -- , indexname     :: String
+                -- , scanrelation  :: String
+                -- }
               | BITMAPINDEXSCAN
                 { indexqual    :: [Expr]
                 , indexname    :: String

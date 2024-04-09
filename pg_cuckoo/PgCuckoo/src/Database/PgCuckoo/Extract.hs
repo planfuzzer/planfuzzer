@@ -137,22 +137,22 @@ extract op = let
     mapM_ (~~>) indexqual
 
 -- 10.23
--- (~>) i@(INDEXONLYSCAN {targetlist, qual, indexqual, recheckqual, indexname, scanrelation})
---   = do
---     -- logScan i
---     logTable scanrelation
---     mapM_ (~~~>) targetlist
---     mapM_ (~~>) qual
---     mapM_ (~~>) indexqual
---     mapM_ (~~>) recheckqual
--- 10.4
-(~>) i@(INDEXONLYSCAN {targetlist, qual, indexqual, indexname, scanrelation})
+(~>) i@(INDEXONLYSCAN {targetlist, qual, indexqual, recheckqual, indexname, scanrelation})
   = do
     -- logScan i
     logTable scanrelation
     mapM_ (~~~>) targetlist
     mapM_ (~~>) qual
     mapM_ (~~>) indexqual
+    mapM_ (~~>) recheckqual
+-- 10.4
+-- (~>) i@(INDEXONLYSCAN {targetlist, qual, indexqual, indexname, scanrelation})
+--   = do
+--     -- logScan i
+--     logTable scanrelation
+--     mapM_ (~~~>) targetlist
+--     mapM_ (~~>) qual
+--     mapM_ (~~>) indexqual
 
 (~>) (BITMAPINDEXSCAN {indexqual, indexname, scanrelation})
   = do

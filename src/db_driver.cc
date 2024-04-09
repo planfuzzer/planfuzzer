@@ -199,7 +199,7 @@ int main(int argc, char *argv[]) {
   YAML::Node config = YAML::LoadFile("../config.yml");
   std::string db_name = config["db"].as<std::string>();
   std::string startup_cmd = config["startup_cmd"].as<std::string>();
-  std::string log_dir = config["log_dir"].as<std::string>();
+  // std::string log_dir = config["log_dir"].as<std::string>();
   client::DBClient *database = client::create_client(db_name, config);
   std::string cuckoo_conn = database->cuckoo_conn();
 
@@ -227,7 +227,7 @@ int main(int argc, char *argv[]) {
     std::string op = (char*)buf;
     op.resize(len);
 
-    all_query_case += 1;
+    // all_query_case += 1;
 
     // translate op to plan (Haskell)
     // std::cout << "Cuckoo conn : " << cuckoo_conn << std::endl;

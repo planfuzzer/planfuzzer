@@ -662,67 +662,7 @@ trOperator (I.INDEXSCAN {I.targetlist, I.qual, I.indexqual, I.indexorderby, I.in
               }
 
 -- 10.23
--- trOperator (I.INDEXONLYSCAN {I.targetlist, I.qual, I.indexqual, I.recheckqual, I.indexorderby, I.indexorderasc, I.indexname, I.scanrelation})
---   = do
---     context <- lift $ ask
---     table <- accessPgClass indexname
-
---     let context' = context {rtables=table:rtables context}
-
---     targetlist' <- local (const context') $ mapM trTargetEntry $ zip targetlist [1..]
---     qual'       <- local (const context') $ mapM trExpr qual
---     indexqual'  <- local (const context') $ mapM trExpr indexqual
-
---     let indexorderdir = if indexorderasc then 1 else -1
-
---     rtables <- getRTables ()
---     let rtable:_ = filter (\x -> tName x == scanrelation) rtables
---     let (Just index) = elemIndex rtable rtables
---     let index' = fromIntegral index + 1
---     let origtbl = tOID rtable
-
---     tbl <- accessPgClass indexname
---     let indexColumns = zip [1..] (tCols tbl)
-
---     -- Have to infer '*' from index.
---     let indextlist = [ O.TARGETENTRY
---                       { O.expr =
---                         O.VAR
---                         { O.varno = index'
---                         , O.varattno = n
---                         , O.vartype = cAtttypid e
---                         , O.vartypmod = cAtttypmod e
---                         , O.varcollid = cAttcollation e
---                         , O.varlevelsup = 0
---                         , O.varnoold = 0
---                         , O.varoattno = 0
---                         , O.location = -1
---                         }
---                       , O.resno = n
---                       , O.resname = Nothing
---                       , O.ressortgroupref = 0
---                       , O.resorigtbl = 0
---                       , O.resorigcol = 0
---                       , O.resjunk = O.PgFalse }
---                     | (n, e) <- indexColumns
---                     ]
-
---     return $ O.INDEXONLYSCAN
---               { O.genericPlan =
---                   O.defaultPlan
---                     { O.targetlist = O.List $ map (\x -> x {O.resorigtbl=origtbl}) targetlist'
---                     , O.qual       = O.List qual'
---                     }
---               , O.scanrelid = index'
---               , O.indexid   = tOID tbl
---               , O.indexqual = O.List indexqual'
---               , O.recheckqual = O.List indexqual'
---               , O.indexorderby  = Nothing
---               , O.indextlist = O.List indextlist
---               , O.indexorderdir = indexorderdir
---               }
--- 10.4
-trOperator (I.INDEXONLYSCAN {I.targetlist, I.qual, I.indexqual, I.indexorderby, I.indexorderasc, I.indexname, I.scanrelation})
+trOperator (I.INDEXONLYSCAN {I.targetlist, I.qual, I.indexqual, I.recheckqual, I.indexorderby, I.indexorderasc, I.indexname, I.scanrelation})
   = do
     context <- lift $ ask
     table <- accessPgClass indexname
@@ -776,10 +716,70 @@ trOperator (I.INDEXONLYSCAN {I.targetlist, I.qual, I.indexqual, I.indexorderby, 
               , O.scanrelid = index'
               , O.indexid   = tOID tbl
               , O.indexqual = O.List indexqual'
+              , O.recheckqual = O.List indexqual'
               , O.indexorderby  = Nothing
               , O.indextlist = O.List indextlist
               , O.indexorderdir = indexorderdir
               }
+-- 10.4
+-- trOperator (I.INDEXONLYSCAN {I.targetlist, I.qual, I.indexqual, I.indexorderby, I.indexorderasc, I.indexname, I.scanrelation})
+--   = do
+--     context <- lift $ ask
+--     table <- accessPgClass indexname
+
+--     let context' = context {rtables=table:rtables context}
+
+--     targetlist' <- local (const context') $ mapM trTargetEntry $ zip targetlist [1..]
+--     qual'       <- local (const context') $ mapM trExpr qual
+--     indexqual'  <- local (const context') $ mapM trExpr indexqual
+
+--     let indexorderdir = if indexorderasc then 1 else -1
+
+--     rtables <- getRTables ()
+--     let rtable:_ = filter (\x -> tName x == scanrelation) rtables
+--     let (Just index) = elemIndex rtable rtables
+--     let index' = fromIntegral index + 1
+--     let origtbl = tOID rtable
+
+--     tbl <- accessPgClass indexname
+--     let indexColumns = zip [1..] (tCols tbl)
+
+--     -- Have to infer '*' from index.
+--     let indextlist = [ O.TARGETENTRY
+--                       { O.expr =
+--                         O.VAR
+--                         { O.varno = index'
+--                         , O.varattno = n
+--                         , O.vartype = cAtttypid e
+--                         , O.vartypmod = cAtttypmod e
+--                         , O.varcollid = cAttcollation e
+--                         , O.varlevelsup = 0
+--                         , O.varnoold = 0
+--                         , O.varoattno = 0
+--                         , O.location = -1
+--                         }
+--                       , O.resno = n
+--                       , O.resname = Nothing
+--                       , O.ressortgroupref = 0
+--                       , O.resorigtbl = 0
+--                       , O.resorigcol = 0
+--                       , O.resjunk = O.PgFalse }
+--                     | (n, e) <- indexColumns
+--                     ]
+
+--     return $ O.INDEXONLYSCAN
+--               { O.genericPlan =
+--                   O.defaultPlan
+--                     { O.targetlist = O.List $ map (\x -> x {O.resorigtbl=origtbl}) targetlist'
+--                     , O.qual       = O.List qual'
+--                     }
+--               , O.scanrelid = index'
+--               , O.indexid   = tOID tbl
+--               , O.indexqual = O.List indexqual'
+--               , O.indexorderby  = Nothing
+--               , O.indextlist = O.List indextlist
+--               , O.indexorderdir = indexorderdir
+--               }
 
 
 trOperator (I.BITMAPINDEXSCAN {I.indexqual, I.indexname, I.scanrelation})

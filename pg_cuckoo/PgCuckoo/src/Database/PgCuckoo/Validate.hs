@@ -175,20 +175,7 @@ validateExpr op = let
     mapM_ (~~>) indexqual
 
 -- 10.23
--- (~>) (INDEXONLYSCAN {targetlist, qual, indexqual, recheckqual, indexname, scanrelation})
---   = do
---     when (null indexname)
---       $ logError "INDEXONLYSCAN: indexname not specified"
-
---     when (null scanrelation)
---       $ logError $ "INDEXONLYSCAN error: scanrelation is empty"
-
---     mapM_ (~~~>) targetlist
---     mapM_ (~~>) qual
---     mapM_ (~~>) indexqual
---     mapM_ (~~>) recheckqual
--- 10.4
-(~>) (INDEXONLYSCAN {targetlist, qual, indexqual, indexname, scanrelation})
+(~>) (INDEXONLYSCAN {targetlist, qual, indexqual, recheckqual, indexname, scanrelation})
   = do
     when (null indexname)
       $ logError "INDEXONLYSCAN: indexname not specified"
@@ -199,6 +186,19 @@ validateExpr op = let
     mapM_ (~~~>) targetlist
     mapM_ (~~>) qual
     mapM_ (~~>) indexqual
+    mapM_ (~~>) recheckqual
+-- 10.4
+-- (~>) (INDEXONLYSCAN {targetlist, qual, indexqual, indexname, scanrelation})
+--   = do
+--     when (null indexname)
+--       $ logError "INDEXONLYSCAN: indexname not specified"
+
+--     when (null scanrelation)
+--       $ logError $ "INDEXONLYSCAN error: scanrelation is empty"
+
+--     mapM_ (~~~>) targetlist
+--     mapM_ (~~>) qual
+--     mapM_ (~~>) indexqual
 
 
 (~>) (BITMAPINDEXSCAN {indexqual, indexname, scanrelation})

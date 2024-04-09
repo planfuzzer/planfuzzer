@@ -174,7 +174,7 @@ data PLANNEDSTMT = PLANNEDSTMT
                     , stmt_location          :: Integer   -- start location, or -1 if unknown
                     , stmt_len               :: Integer   -- length in bytes; 0 means "rest of string"
                     -- agensgraph
-                    , hasGraphwriteClause    :: PgBool
+                    -- , hasGraphwriteClause    :: PgBool
                     }
     deriving (Eq, Show, Generic, GPrint)
 
@@ -203,7 +203,7 @@ defaultPlannedStmt = PLANNEDSTMT
                       , stmt_location=0
                       , stmt_len=0
                       -- agensgraph
-                      , hasGraphwriteClause=PgFalse
+                      -- , hasGraphwriteClause=PgFalse
                       }
 
 -- | Plan structure with all fields postgres needs
@@ -341,26 +341,26 @@ data Plan =
             , indexorderdir    :: Integer
             }
           -- 10.23
-          -- | INDEXONLYSCAN
-          --   { genericPlan   :: GenericPlan
-          --   , scanrelid     :: Integer
-          --   , indexid       :: Integer
-          --   , indexqual     :: List Expr
-          --   , recheckqual     :: List Expr
-          --   , indexorderby  :: Maybe (PlainList Integer)
-          --   , indextlist    :: List TARGETENTRY
-          --   , indexorderdir :: Integer
-          --   }
-          -- 10.4
           | INDEXONLYSCAN
             { genericPlan   :: GenericPlan
             , scanrelid     :: Integer
             , indexid       :: Integer
             , indexqual     :: List Expr
+            , recheckqual     :: List Expr
             , indexorderby  :: Maybe (PlainList Integer)
             , indextlist    :: List TARGETENTRY
             , indexorderdir :: Integer
             }
+          -- 10.4
+          -- | INDEXONLYSCAN
+          --   { genericPlan   :: GenericPlan
+          --   , scanrelid     :: Integer
+          --   , indexid       :: Integer
+          --   , indexqual     :: List Expr
+          --   , indexorderby  :: Maybe (PlainList Integer)
+          --   , indextlist    :: List TARGETENTRY
+          --   , indexorderdir :: Integer
+          --   }
           | BITMAPINDEXSCAN
             { genericPlan   :: GenericPlan
             , scanrelid     :: Integer

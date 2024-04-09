@@ -32,7 +32,7 @@ include_directories(
 )
 
 # postgresql client
-add_library(postgresql_client OBJECT
+add_library(postgresql_client SHARED
     ${CMAKE_CURRENT_SOURCE_DIR}/src/postgresql/client_postgresql.cc
 )
 target_include_directories(postgresql_client PUBLIC
@@ -41,7 +41,6 @@ target_include_directories(postgresql_client PUBLIC
 target_link_libraries(postgresql_client PUBLIC
     ${PostgreSQL_LIBRARIES}
     ${YAML_CPP_LIBRARIES}
-    # absl::strings absl::str_format
 )
 target_compile_options(postgresql_client PRIVATE -fPIC)
 list(APPEND LINK_CLIENT postgresql_client)
